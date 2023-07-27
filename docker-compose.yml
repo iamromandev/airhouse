@@ -1,0 +1,55 @@
+services:
+  db:
+    platform: linux/arm64
+    image: postgres
+    hostname: db
+    container_name: db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    networks:
+      - web
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      start_period: 3s
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    restart: on-failure
+
+  web:
+    platform: linux/arm64
+    hostname: web
+    container_name: web
+    build:
+      context: .
+      dockerfile: dockerfile
+      target: local
+      args:
+        ENV: local
+        WORK_DIR: /workdir
+        PYTHON_VERSION: 3.9.16
+    ports:
+      - 8100:8100
+    links:
+      - db
+    volumes:
+      - .:/workdir
+    networks:
+      - web
+    depends_on:
+      db:
+        condition: service_healthy
+    command: >
+      bash -c "uvicorn src.main:app --host 0.0.0.0 --port 8100"
+    restart: unless-stopped
+
+networks:
+  web:
+    name: web
+    driver: bridge
