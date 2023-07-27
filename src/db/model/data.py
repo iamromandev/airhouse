@@ -1,11 +1,12 @@
+from typing import Optional
 from datetime import datetime
 
 from sqlmodel import SQLModel, Field
 
 
 class DataBase(SQLModel):
-    date: datetime = Field()
-    key: str = Field()
+    date: str = Field()
+    key: Optional[str] = Field(default=None)
 
 
 class Data(DataBase, table=False):

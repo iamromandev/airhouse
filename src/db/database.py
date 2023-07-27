@@ -1,4 +1,4 @@
-from typing import Type, TypeVar, Generator, Any
+from typing import Type, TypeVar, Generator, Any, Dict
 
 # from sqlmodel import (
 #     create_engine,
@@ -7,14 +7,16 @@ from typing import Type, TypeVar, Generator, Any
 #     select,
 # )
 from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session
 
 from src.core.config import get_config, Env
 
 config = get_config()
 print(config.db_url)
 engine = create_engine(config.db_url)
-Session = sessionmaker(bind=engine)
+
+
+# Session = sessionmaker(bind=engine)
 
 # Session = sessionmaker(bind=engine)
 
@@ -30,8 +32,20 @@ class Database:
 
     @classmethod
     def get_session(cls) -> Generator[Session, None, None]:
-        with Session() as session:
+        with Session(bind=engine) as session:
             yield session
+
+    @classmethod
+    def get_columns(cls, session: Session, table: str) -> Dict[str, int]:
+        query = "SELECT column_name, ordinal_position FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'local'"
+        rows = session.execute(query)
+
+        columns = {
+            row[0]: (row[1] - 1)
+            for row in rows
+        }
+
+        return columns
 
     # @classmethod
     # def update_sql_model(cls, model: T, updates: T) -> None:
