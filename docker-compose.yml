@@ -5,13 +5,13 @@ services:
     hostname: db
     container_name: db
     environment:
-      POSTGRES_DB: ${POSTGRES_DATABASE}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - 5432:5432
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - ./data/db:/var/core/postgresql/data
     networks:
       - web
     healthcheck:
@@ -33,7 +33,7 @@ services:
       args:
         ENV: local
         WORK_DIR: /workdir
-        PYTHON_VERSION: 3.9.16
+        PYTHON_VERSION: 3.11.3
     ports:
       - 8100:8100
     links:
@@ -46,7 +46,7 @@ services:
       db:
         condition: service_healthy
     command: >
-      bash -c "uvicorn src.main:app --host 0.0.0.0 --port 8100"
+      bash -c "uvicorn src.main:app --reload --workers 1 --host 0.0.0.0 --port 8100"
     restart: unless-stopped
 
 networks:
