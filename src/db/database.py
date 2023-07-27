@@ -37,7 +37,7 @@ class Database:
 
     @classmethod
     def get_columns(cls, session: Session, table: str) -> Dict[str, int]:
-        query = "SELECT column_name, ordinal_position FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'local'"
+        query = f"SELECT column_name, ordinal_position FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '{table}'"
         rows = session.execute(query)
 
         columns = {

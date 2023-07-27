@@ -21,6 +21,14 @@ class DataRepo:
             Data(
                 date=row[columns["date"]],
                 key=row[columns["key"]],
+                new_confirmed=row[columns["new_confirmed"]],
+                new_deceased=row[columns["new_deceased"]],
+                new_recovered=row[columns["new_recovered"]],
+                new_tested=row[columns["new_tested"]],
+                total_confirmed=row[columns["total_confirmed"]],
+                total_deceased=row[columns["total_deceased"]],
+                total_recovered=row[columns["total_recovered"]],
+                total_tested=row[columns["total_tested"]]
             )
             for row in rows
         ]
