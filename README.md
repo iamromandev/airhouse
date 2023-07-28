@@ -67,6 +67,7 @@ Open http://localhost:8000 on browser
 8. Wait for Completion
 
 #### Reporting API Service
+Hit http://localhost:8100/api/data/ on browser or postman
 
 
 
