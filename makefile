@@ -25,6 +25,11 @@ stop:
 down:
 	docker-compose -f docker-compose.yml down
 
+.PHONY: start
+start:
+	make build
+	make up
+
 .PHONY: restart
 restart:
 	make stop

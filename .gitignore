@@ -1,6 +1,7 @@
 ### Ignore ###
+.DS_Store
 .idea
-.env
+#.env
 __pycache__
 poetry.lock
 data

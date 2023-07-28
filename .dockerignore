@@ -1,8 +1,10 @@
 ### Ignore ###
+.DS_Store
 .idea
 __pycache__
 poetry.lock
 data
+airbyte
 
 # Ignore generated files
 **/*.pyc
