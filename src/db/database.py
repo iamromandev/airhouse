@@ -9,7 +9,7 @@ from typing import Type, TypeVar, Generator, Any, Dict
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import Session
 
-from src.core.config import get_config, Env
+from src.core.config import get_config
 
 config = get_config()
 print(config.db_url)
@@ -37,7 +37,7 @@ class Database:
 
     @classmethod
     def get_columns(cls, session: Session, table: str) -> Dict[str, int]:
-        query = f"SELECT column_name, ordinal_position FROM information_schema.columns WHERE table_schema = 'public' AND table_name = '{table}'"
+        query = f"select column_name, ordinal_position from information_schema.columns where table_schema = 'public' AND table_name = '{table}'"
         rows = session.execute(query)
 
         columns = {

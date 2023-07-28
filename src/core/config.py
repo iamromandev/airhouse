@@ -21,6 +21,7 @@ class Config(BaseSettings):
     db_password: str
     db_port: int
     db_host: str
+    etl_table: str
 
     @cached_property
     def db_url(self) -> str:

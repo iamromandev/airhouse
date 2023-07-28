@@ -6,15 +6,20 @@ from src.db.model.data import Data
 
 from src.db.database import Database
 
+from src.core.config import get_config
+
+config = get_config()
+
 
 class DataRepo:
 
     def __init__(self, session: Session):
         self.session = session
+        self.table = config.etl_table
 
     def get_all(self) -> List[Data]:
-        rows = self.session.execute("SELECT * FROM local")
-        columns = Database.get_columns(self.session, "local")
+        rows = self.session.execute(f"select * from {self.table}")
+        columns = Database.get_columns(self.session, self.table)
         print(columns)
 
         data = [
