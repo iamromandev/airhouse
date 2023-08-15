@@ -4,7 +4,7 @@ transforming it into desired format, and loading it into our **postress** destin
 
 ####
 
-**AirHouse** is built on open source `AirByte` for _ETL_ process and `FastAPI` for Reporting service.
+**AirHouse** is built on open source `AirByte` for _ETL_ process and `FastAPI` for Reporting API service.
 
 ## Tools
 
