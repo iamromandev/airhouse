@@ -1,13 +1,13 @@
-### Ignore ###
-.DS_Store
+### ignore ###
+.ds_store
 .idea
 __pycache__
 poetry.lock
 data
 airbyte
 
-# Ignore generated files
+# ignore generated files
 **/*.pyc
 
-### Allow ###
+### allow ###
 !.env.example
